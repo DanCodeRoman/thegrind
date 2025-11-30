@@ -94,17 +94,28 @@
             display: none;
         }
         
+        /* Checklist Logic Styles */
         .checkbox-wrapper input:checked + div {
-            background-color: var(--theme-color);
-            color: black;
-            box-shadow: 0 0 15px var(--theme-color);
+            background-color: var(--theme-dim); /* Dim background */
+            border-color: #333;
+            opacity: 0.6;
+            box-shadow: none;
         }
         
-        .checkbox-wrapper input:checked + div h3,
-        .checkbox-wrapper input:checked + div p,
-        .checkbox-wrapper input:checked + div div {
-            color: black;
-            border-color: black;
+        .checkbox-wrapper input:checked + div .task-title {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .checkbox-wrapper input:checked + div .task-meta {
+            color: #444 !important;
+        }
+
+        /* Calendar & List Checkbox specific */
+        .completed-task {
+            text-decoration: line-through;
+            opacity: 0.5;
+            color: #666;
         }
 
         .nav-item.active {
@@ -139,7 +150,6 @@
 </head>
 <body class="flex flex-col h-screen overflow-hidden">
 
-    <!-- Header / Top Bar -->
     <header class="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-black z-50">
         <div class="flex items-center gap-3">
             <i class="fas fa-bolt text-2xl neon-text animate-pulse"></i>
@@ -158,7 +168,6 @@
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <!-- Sidebar Navigation -->
         <nav class="w-20 md:w-64 border-r border-gray-800 flex flex-col justify-between bg-black z-40">
             <div class="flex flex-col mt-4 gap-2">
                 <button onclick="switchView('home')" class="nav-item active p-4 transition-colors text-left flex items-center gap-4">
@@ -188,68 +197,52 @@
             </div>
         </nav>
 
-        <!-- Main Content Area -->
         <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
             
-            <!-- HOME DASHBOARD -->
             <section id="home-view" class="max-w-5xl mx-auto space-y-8">
-                <!-- Quote -->
                 <div class="neon-box p-6 rounded-sm text-center float-anim relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 opacity-50" style="background-color: var(--theme-color)"></div>
                     <p id="daily-quote" class="text-lg md:text-2xl italic font-bold" style="color: var(--theme-color)">"Discipline is doing what needs to be done, even if you don't want to do it."</p>
                 </div>
 
-                <!-- Daily Grind -->
                 <div>
                     <h2 class="text-2xl font-bold mb-4 border-b border-gray-800 pb-2 neon-text">TODAY'S GRIND</h2>
                     <div id="daily-tasks" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Populated by JS -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Immediate Upcoming -->
                 <div>
                     <h2 class="text-2xl font-bold mb-4 border-b border-gray-800 pb-2 neon-text">UP NEXT</h2>
                     <div id="upcoming-preview" class="space-y-3">
-                        <!-- Populated by JS -->
-                    </div>
+                        </div>
                 </div>
             </section>
 
-            <!-- CALENDAR VIEW -->
             <section id="calendar-view" class="hidden-section max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold mb-6 neon-text">MASTER SCHEDULE</h2>
                 <div id="calendar-list" class="space-y-4">
-                    <!-- Populated by JS -->
-                </div>
+                    </div>
             </section>
 
-            <!-- CLASSES VIEW -->
             <section id="classes-view" class="hidden-section max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold mb-6 neon-text">SUBJECT SORT</h2>
                 <div id="classes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Populated by JS -->
-                </div>
+                    </div>
             </section>
 
-            <!-- COUNTDOWN VIEW -->
             <section id="countdown-view" class="hidden-section max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold mb-6 neon-text">TIME REMAINING</h2>
                 <div id="countdown-grid" class="grid grid-cols-1 gap-4">
-                    <!-- Populated by JS -->
-                </div>
+                    </div>
             </section>
 
-            <!-- PREP STRATEGY VIEW -->
             <section id="prep-view" class="hidden-section max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold mb-6 neon-text">TACTICAL PREP</h2>
                 <p class="text-gray-400 mb-6">AI-Generated Strategy Guide for each assessment.</p>
                 <div id="prep-list" class="space-y-8">
-                    <!-- Populated by JS -->
-                </div>
+                    </div>
             </section>
 
-            <!-- TIMER VIEW -->
             <section id="timer-view" class="hidden-section h-full flex flex-col items-center justify-center">
                 <div class="neon-box p-12 rounded-full w-80 h-80 flex flex-col items-center justify-center relative mb-8 pulse-anim" style="border-color: var(--theme-color)">
                     <div id="timer-display" class="text-6xl font-bold tracking-tighter" style="color: var(--theme-color)">25:00</div>
@@ -268,14 +261,12 @@
                 </div>
             </section>
 
-            <!-- SETTINGS VIEW -->
             <section id="settings-view" class="hidden-section max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold mb-6 neon-text">SYSTEM SETTINGS</h2>
                 
                 <div class="neon-box p-8">
                     <h3 class="text-xl font-bold mb-6">INTERFACE THEME</h3>
                     <div class="grid grid-cols-4 md:grid-cols-8 gap-6 justify-items-center">
-                        <!-- Theme Buttons -->
                         <div onclick="setTheme('#ffffff')" class="theme-btn" style="background-color: #ffffff; color: #ffffff" title="Ghost"></div>
                         <div onclick="setTheme('#ef4444')" class="theme-btn" style="background-color: #ef4444; color: #ef4444" title="Crimson"></div>
                         <div onclick="setTheme('#3b82f6')" class="theme-btn" style="background-color: #3b82f6; color: #3b82f6" title="Tron"></div>
@@ -288,10 +279,12 @@
                     <p class="text-center mt-6 text-sm text-gray-500">Select a core color to update the neural interface.</p>
                 </div>
 
-                <div class="neon-box p-8 mt-6 opacity-50 cursor-not-allowed">
+                <div class="neon-box p-8 mt-6">
                     <h3 class="text-xl font-bold mb-2">DATA MANAGEMENT</h3>
-                    <p class="text-sm text-gray-500 mb-4">Export schedule or reset points (Coming Soon)</p>
-                    <button class="border border-gray-600 text-gray-600 px-4 py-2 text-sm">RESET ALL DATA</button>
+                    <div class="flex justify-between items-center">
+                        <p class="text-sm text-gray-500">Clear all progress and resets points to 0.</p>
+                        <button onclick="resetData()" class="border border-red-900 text-red-500 px-4 py-2 text-sm hover:bg-red-900 hover:text-white transition-colors">RESET ALL DATA</button>
+                    </div>
                 </div>
             </section>
 
@@ -370,6 +363,7 @@
         let points = parseInt(localStorage.getItem('grindPoints')) || 0;
         let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
         let currentTheme = localStorage.getItem('grindTheme') || '#ffffff';
+        let currentView = 'home';
         let timerInterval;
         let timeLeft = 25 * 60;
         let isTimerRunning = false;
@@ -380,11 +374,7 @@
             updateSystemTime();
             setInterval(updateSystemTime, 1000); // Clock update
             
-            renderHome();
-            renderCalendar();
-            renderClasses();
-            renderCountdown();
-            renderPrep();
+            renderAllViews();
             updatePointsDisplay();
             
             // Random Quote
@@ -414,13 +404,33 @@
             });
         }
 
+        // --- HELPER ---
+        function getTaskId(item) {
+            // Generate a consistent ID based on date and title (remove spaces)
+            return `task-${item.date}-${item.title.replace(/[^a-zA-Z0-9]/g, '')}`;
+        }
+
         // --- NAVIGATION ---
         function switchView(viewName) {
+            currentView = viewName;
             document.querySelectorAll('section').forEach(el => el.classList.add('hidden-section'));
             document.getElementById(`${viewName}-view`).classList.remove('hidden-section');
             
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
+
+            // Re-render specific view to ensure freshness
+            if(viewName === 'calendar') renderCalendar();
+            if(viewName === 'classes') renderClasses();
+            if(viewName === 'home') renderHome();
+        }
+
+        function renderAllViews() {
+            renderHome();
+            renderCalendar();
+            renderClasses();
+            renderCountdown();
+            renderPrep();
         }
 
         // --- RENDERERS ---
@@ -438,10 +448,8 @@
             // Find immediate upcoming (next 3)
             const upcoming = schedule.filter(item => new Date(item.date) >= today).sort((a, b) => new Date(a.date) - new Date(b.date));
             
-            // Daily Tasks (Logic: If event is today, task is "Perform". If event is within 3 days, task is "Study")
-            let dailyGrindCount = 0;
-
-            upcoming.slice(0, 4).forEach((item, index) => {
+            // Daily Tasks
+            upcoming.slice(0, 4).forEach((item) => {
                 const itemDate = new Date(item.date);
                 const diffTime = Math.ceil((itemDate - today) / (1000 * 60 * 60 * 24));
                 
@@ -457,7 +465,7 @@
                     taskText = `PREP MATERIAL: ${item.title}`;
                 }
 
-                const taskId = `task-${item.date}-${item.title.replace(/\s/g, '')}`;
+                const taskId = getTaskId(item);
                 const isChecked = completedTasks.includes(taskId) ? 'checked' : '';
 
                 const html = `
@@ -465,26 +473,28 @@
                         <input type="checkbox" class="hidden" ${isChecked} onchange="toggleTask('${taskId}', ${pointsVal})">
                         <div class="neon-box p-4 flex items-center justify-between group-hover:bg-gray-900 transition-colors">
                             <div>
-                                <h3 class="font-bold text-sm text-gray-400" style="color: var(--theme-color)">${item.class}</h3>
-                                <p class="text-lg text-gray-200">${taskText}</p>
+                                <h3 class="font-bold text-sm text-gray-400 task-meta" style="color: var(--theme-color)">${item.class}</h3>
+                                <p class="text-lg text-gray-200 task-title">${taskText}</p>
                             </div>
-                            <div class="text-xs border px-2 py-1 rounded" style="border-color: var(--theme-color); color: var(--theme-color)">+${pointsVal} PTS</div>
+                            <div class="text-xs border px-2 py-1 rounded task-meta" style="border-color: var(--theme-color); color: var(--theme-color)">+${pointsVal} PTS</div>
                         </div>
                     </label>
                 `;
                 taskContainer.innerHTML += html;
-                dailyGrindCount++;
             });
 
             // Up Next List
             upcoming.slice(0, 5).forEach(item => {
                 const d = new Date(item.date);
                 const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const taskId = getTaskId(item);
+                const isCompleted = completedTasks.includes(taskId);
+
                 const html = `
-                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2 ${isCompleted ? 'opacity-50' : ''}">
                         <div>
                             <span class="text-xs text-gray-500 block">${dateStr}</span>
-                            <span class="font-bold text-gray-300">${item.title}</span>
+                            <span class="font-bold text-gray-300 ${isCompleted ? 'line-through' : ''}">${item.title}</span>
                         </div>
                         <span class="text-xs bg-gray-800 text-white px-2 py-1 font-bold">${item.class}</span>
                     </div>
@@ -499,24 +509,31 @@
             
             schedule.forEach(item => {
                 const d = new Date(item.date);
-                const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-                
+                const taskId = getTaskId(item);
+                const isChecked = completedTasks.includes(taskId) ? 'checked' : '';
+                const isCompletedClass = completedTasks.includes(taskId) ? 'completed-task' : '';
+                const boxOpacity = completedTasks.includes(taskId) ? 'opacity-50' : '';
+
                 const html = `
-                    <div class="neon-box p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="text-center w-16 border-r border-gray-700 pr-4">
-                                <div class="text-sm text-gray-400">${d.toLocaleString('default', { month: 'short' })}</div>
-                                <div class="text-2xl font-bold text-gray-200">${d.getDate()}</div>
+                    <label class="checkbox-wrapper cursor-pointer block">
+                        <input type="checkbox" class="hidden" ${isChecked} onchange="toggleTask('${taskId}', 50)">
+                        <div class="neon-box p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 ${boxOpacity} hover:bg-gray-900">
+                            <div class="flex items-center gap-4">
+                                <div class="text-center w-16 border-r border-gray-700 pr-4">
+                                    <div class="text-sm text-gray-400">${d.toLocaleString('default', { month: 'short' })}</div>
+                                    <div class="text-2xl font-bold text-gray-200">${d.getDate()}</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold task-title ${isCompletedClass}" style="color: var(--theme-color)">${item.title}</div>
+                                    <div class="text-sm text-gray-400 task-meta">${item.class}</div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="text-xl font-bold" style="color: var(--theme-color)">${item.title}</div>
-                                <div class="text-sm text-gray-400">${item.class}</div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check-circle text-2xl ${completedTasks.includes(taskId) ? 'text-green-500' : 'text-gray-800'}"></i>
+                                <span class="text-xs border border-gray-600 px-2 py-1 text-gray-400 task-meta">${item.type.toUpperCase()}</span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                             <span class="text-xs border border-gray-600 px-2 py-1 text-gray-400">${item.type.toUpperCase()}</span>
-                        </div>
-                    </div>
+                    </label>
                 `;
                 container.innerHTML += html;
             });
@@ -535,22 +552,29 @@
             Object.keys(groups).forEach(className => {
                 let itemsHtml = '';
                 groups[className].forEach(item => {
-                     const d = new Date(item.date);
-                     itemsHtml += `
-                        <li class="flex justify-between text-sm py-1 border-b border-gray-800 border-dashed">
-                            <span class="text-gray-300">${item.title}</span>
-                            <span class="text-gray-500">${d.getDate()} ${d.toLocaleString('default', { month: 'short' })}</span>
-                        </li>
-                     `;
+                      const d = new Date(item.date);
+                      const taskId = getTaskId(item);
+                      const isChecked = completedTasks.includes(taskId) ? 'checked' : '';
+                      const isCompletedClass = completedTasks.includes(taskId) ? 'completed-task' : '';
+
+                      itemsHtml += `
+                        <label class="flex items-center justify-between text-sm py-2 border-b border-gray-800 border-dashed cursor-pointer hover:bg-white/5 px-2 -mx-2 rounded">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" ${isChecked} onchange="toggleTask('${taskId}', 50)" class="accent-current">
+                                <span class="text-gray-300 ${isCompletedClass}">${item.title}</span>
+                            </div>
+                            <span class="text-gray-500 text-xs">${d.getDate()} ${d.toLocaleString('default', { month: 'short' })}</span>
+                        </label>
+                      `;
                 });
 
                 const html = `
                     <div class="neon-box p-6 relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 text-8xl opacity-10 font-bold select-none" style="color: var(--theme-color)">${className.charAt(0)}</div>
                         <h3 class="text-xl font-bold mb-4 border-b-2 inline-block pb-1" style="border-color: var(--theme-color); color: var(--theme-color)">${className}</h3>
-                        <ul class="space-y-2 relative z-10">
+                        <div class="space-y-1 relative z-10">
                             ${itemsHtml}
-                        </ul>
+                        </div>
                     </div>
                 `;
                 container.innerHTML += html;
@@ -576,19 +600,24 @@
                 else if(days < 5) urgencyClass = "text-yellow-500";
                 else urgencyClass = "text-gray-200";
 
-                const html = `
-                    <div class="flex items-center justify-between bg-gray-900 p-4 border-l-4" style="border-color: ${days < 2 ? '#ef4444' : 'var(--theme-color)'}">
-                        <div>
-                            <div class="font-bold text-lg" style="color: var(--theme-color)">${item.title}</div>
-                            <div class="text-xs text-gray-500">${item.class}</div>
+                const taskId = getTaskId(item);
+                const isCompleted = completedTasks.includes(taskId);
+
+                if(!isCompleted) {
+                    const html = `
+                        <div class="flex items-center justify-between bg-gray-900 p-4 border-l-4" style="border-color: ${days < 2 ? '#ef4444' : 'var(--theme-color)'}">
+                            <div>
+                                <div class="font-bold text-lg" style="color: var(--theme-color)">${item.title}</div>
+                                <div class="text-xs text-gray-500">${item.class}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-mono ${urgencyClass}">${days}d ${hours}h</div>
+                                <div class="text-xs text-gray-600">REMAINING</div>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <div class="text-2xl font-mono ${urgencyClass}">${days}d ${hours}h</div>
-                            <div class="text-xs text-gray-600">REMAINING</div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
+                    `;
+                    container.innerHTML += html;
+                }
             });
         }
 
@@ -599,19 +628,24 @@
             schedule.forEach(item => {
                 const strategies = prepStrategies[item.type] || prepStrategies["Quiz"];
                 const stratList = strategies.map(s => `<li><i class="fas fa-check text-xs mr-2" style="color: var(--theme-color)"></i>${s}</li>`).join('');
+                
+                const taskId = getTaskId(item);
+                const isCompleted = completedTasks.includes(taskId);
 
-                const html = `
-                    <div class="border-l-2 pl-4 py-2 hover:bg-gray-900 transition-colors" style="border-color: var(--theme-color)">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-lg" style="color: var(--theme-color)">${item.title} <span class="text-sm font-normal text-gray-500">(${item.class})</span></h3>
-                            <span class="text-xs bg-gray-800 px-2 py-1 text-gray-400">${item.type}</span>
+                if(!isCompleted) {
+                    const html = `
+                        <div class="border-l-2 pl-4 py-2 hover:bg-gray-900 transition-colors" style="border-color: var(--theme-color)">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg" style="color: var(--theme-color)">${item.title} <span class="text-sm font-normal text-gray-500">(${item.class})</span></h3>
+                                <span class="text-xs bg-gray-800 px-2 py-1 text-gray-400">${item.type}</span>
+                            </div>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                ${stratList}
+                            </ul>
                         </div>
-                        <ul class="text-sm text-gray-300 space-y-1">
-                            ${stratList}
-                        </ul>
-                    </div>
-                `;
-                container.innerHTML += html;
+                    `;
+                    container.innerHTML += html;
+                }
             });
         }
 
@@ -640,7 +674,24 @@
             
             localStorage.setItem('grindPoints', points);
             localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+            
             updatePointsDisplay();
+            
+            // Re-render only the current view to give instant feedback without full page reload feels
+            if(currentView === 'home') renderHome();
+            else if(currentView === 'calendar') renderCalendar();
+            else if(currentView === 'classes') renderClasses();
+            
+            // Render side-effect views (like countdown removing items)
+            renderCountdown(); 
+        }
+
+        function resetData() {
+            if(confirm("Are you sure? This will wipe all progress.")) {
+                localStorage.removeItem('completedTasks');
+                localStorage.removeItem('grindPoints');
+                location.reload();
+            }
         }
 
         function updatePointsDisplay() {
